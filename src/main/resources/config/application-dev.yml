@@ -24,6 +24,11 @@ spring:
             enabled: false # we use gulp + BrowserSync for livereload
     jackson:
         serialization.indent_output: true
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:h2:mem:operoncloudplatform;DB_CLOSE_DELAY=-1
@@ -54,10 +59,16 @@ spring:
                   logs: target/elasticsearch/log
                   data: target/elasticsearch/data
     mail:
-        host: localhost
-        port: 25
+        host: mail.authsmtp.com
+        port: 2525
         username:
         password:
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: false
+            ssl.trust: smtp.authsmtp.com
     messages:
         cache-seconds: 1
     thymeleaf:
@@ -107,7 +118,7 @@ jhipster:
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: operoncloudplatform@localhost
+        from: noreply@code4health.org
         base-url: http://127.0.0.1:8080
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
@@ -139,3 +150,24 @@ jhipster:
 # ===================================================================
 
 application:
+
+
+# Provisioner settings
+provisioner:
+    domainUrl: https://explorer.code4health.org/ehrscape-manager/rest/domain/
+    cdrUrl: https://cdr.code4health.org/rest/v1/
+    explorerUrl: https://explorer.code4health.org/explorer
+    subjectNamespace: uk.nhs.nhs_number
+    agentName: operon_provisioner
+    username:
+    password:
+# Notifier settings
+notifier:
+    openEhrUrl: https://cdr.code4health.org/rest/v1/composition/
+    teamName: Code4Health team
+    skipCompositionIdValidation: true
+thinkehr:
+    baseUrl: https://cdr.code4health.org/rest/v1/
+    managerUrl: https://explorer.code4health.org/ehrscape-manager/rest/
+    adminName:
+    password:

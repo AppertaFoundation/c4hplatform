@@ -1,8 +1,11 @@
 package cloud.operon.platform.service;
 
+import cloud.operon.platform.domain.Notification;
 import cloud.operon.platform.domain.Operino;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Map;
 
 /**
  * Service Interface for managing Operino.
@@ -57,4 +60,10 @@ public interface OperinoService {
      *  @return the list of entities
      */
     Page<Operino> search(String query, Pageable pageable);
+
+    Map<String, String> getConfigForOperino(Operino operino);
+
+    Notification sendNotification(Notification notification);
+
+    Page<Notification> getNotifications(Pageable pageable);
 }
