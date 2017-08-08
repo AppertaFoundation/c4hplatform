@@ -1,7 +1,12 @@
 package cloud.operon.platform.web.rest;
 
+import cloud.operon.platform.domain.Operino;
+import cloud.operon.platform.domain.OperinoComponent;
+import cloud.operon.platform.domain.enumeration.HostingType;
+import cloud.operon.platform.domain.enumeration.OperinoComponentType;
 import cloud.operon.platform.repository.UserRepository;
 import cloud.operon.platform.service.MailService;
+import cloud.operon.platform.service.OperinoService;
 import cloud.operon.platform.service.dto.UserDTO;
 import cloud.operon.platform.web.rest.util.HeaderUtil;
 import com.codahale.metrics.annotation.Timed;
@@ -40,12 +45,15 @@ public class AccountResource {
 
     private final MailService mailService;
 
+    private final OperinoService operinoService;
+
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService) {
+                           MailService mailService, OperinoService operinoService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.operinoService = operinoService;
     }
 
     /**
@@ -73,9 +81,33 @@ public class AccountResource {
                             managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(), managedUserVM.getLangKey());
 
                     mailService.sendActivationEmail(user);
+
+                    Operino operino = createInitialOperino("Operino 1", user);
+                    operinoService.save(operino, user);
+
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
         );
+    }
+
+    private Operino createInitialOperino(String operinoName, User user) {
+        Operino operino = new Operino();
+        operino.setName(operinoName);
+        operino.setActive(true);
+        operino.setUser(user);
+        operino.setProvision(true);
+
+        for(int j = 1; j< OperinoComponentType.values().length; j++){
+            OperinoComponent component = new OperinoComponent();
+            component.setAvailability(true);
+            component.setHosting(HostingType.NON_N3);
+            component.setType(OperinoComponentType.values()[j - 1]);
+            component.setDiskSpace(Long.valueOf(String.valueOf(j * 1000)));
+            component.setRecordsNumber(Long.valueOf(String.valueOf(j * 1000)));
+            component.setTransactionsLimit(Long.valueOf(String.valueOf(j * 1000)));
+            operino.addComponent(component);
+        }
+        return operino;
     }
 
     /**

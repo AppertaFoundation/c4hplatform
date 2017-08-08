@@ -2,6 +2,7 @@ package cloud.operon.platform.service.impl;
 
 import cloud.operon.platform.domain.Notification;
 import cloud.operon.platform.domain.Operino;
+import cloud.operon.platform.domain.User;
 import cloud.operon.platform.domain.enumeration.NotificationStatus;
 import cloud.operon.platform.repository.NotificationRepository;
 import cloud.operon.platform.repository.OperinoRepository;
@@ -32,7 +33,7 @@ import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 public class OperinoServiceImpl implements OperinoService{
 
     private final Logger log = LoggerFactory.getLogger(OperinoServiceImpl.class);
-    
+
     private final OperinoRepository operinoRepository;
     private final NotificationRepository notificationRepository;
     private final UserService userService;
@@ -61,9 +62,9 @@ public class OperinoServiceImpl implements OperinoService{
      * @return the persisted entity
      */
     @Override
-    public Operino save(Operino operino) {
+    public Operino save(Operino operino, User user) {
         log.debug("Request to save Operino : {}", operino);
-        operino.setUser(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get());
+        operino.setUser(user);
         Operino result = operinoRepository.save(operino);
         operinoSearchRepository.save(result);
         rabbitTemplate.convertAndSend("operinos", result);
@@ -73,7 +74,7 @@ public class OperinoServiceImpl implements OperinoService{
 
     /**
      *  Get all the operinos.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */

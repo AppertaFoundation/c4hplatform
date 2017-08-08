@@ -1,5 +1,8 @@
 package cloud.operon.platform.web.rest;
 
+import cloud.operon.platform.domain.User;
+import cloud.operon.platform.security.SecurityUtils;
+import cloud.operon.platform.service.UserService;
 import cloud.operon.platform.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -39,10 +42,12 @@ public class OperinoResource {
 
     private final OperinoService operinoService;
     private final OperinoComponentService operinoComponentService;
+    private final UserService userService;
 
-    public OperinoResource(OperinoService operinoService, OperinoComponentService operinoComponentService) {
+    public OperinoResource(OperinoService operinoService, OperinoComponentService operinoComponentService, UserService userService) {
         this.operinoService = operinoService;
         this.operinoComponentService = operinoComponentService;
+        this.userService = userService;
     }
 
     /**
@@ -59,7 +64,8 @@ public class OperinoResource {
         if (operino.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new operino cannot already have an ID")).body(null);
         }
-        Operino result = operinoService.save(operino);
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
+        Operino result = operinoService.save(operino, user);
         return ResponseEntity.created(new URI("/api/operinos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,7 +89,8 @@ public class OperinoResource {
         }
         Operino verifiedOperino = operinoService.verifyOwnershipAndGet(operino.getId());
         if(verifiedOperino != null){
-            Operino result = operinoService.save(operino);
+            User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
+            Operino result = operinoService.save(operino, user);
             return ResponseEntity.ok()
                     .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operino.getId().toString()))
                     .body(result);
@@ -181,9 +188,10 @@ public class OperinoResource {
             }
             operinoComponent.setOperino(operino);
             OperinoComponent result = operinoComponentService.save(operinoComponent);
-            operino.addComponents(result);
+            operino.addComponent(result);
             // also save operino
-            operinoService.save(operino);
+            User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
+            operinoService.save(operino, user);
             return ResponseEntity.created(new URI("/api/operino-components/" + result.getId()))
                     .headers(HeaderUtil.createEntityCreationAlert(COMPONENT_ENTITY_NAME, result.getId().toString()))
                     .body(result);
@@ -240,7 +248,8 @@ public class OperinoResource {
             operino = operino.removeComponents(operinoComponent);
             operinoComponentService.delete(componentId);
             // also save operino
-            operinoService.save(operino);
+            User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
+            operinoService.save(operino, user);
             log.debug("\n\n\n\n\n\n\n Getting components for Operino : {}", operinoService.findOne(id).getComponents());
             return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(COMPONENT_ENTITY_NAME, componentId.toString())).build();
         } else {
@@ -270,7 +279,7 @@ public class OperinoResource {
      * SEARCH  /_search/operinos?query=:query : search for the operino corresponding
      * to the query.
      *
-     * @param query the query of the operino search 
+     * @param query the query of the operino search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

@@ -2,6 +2,7 @@ package cloud.operon.platform.service;
 
 import cloud.operon.platform.domain.Notification;
 import cloud.operon.platform.domain.Operino;
+import cloud.operon.platform.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,13 +17,14 @@ public interface OperinoService {
      * Save a operino.
      *
      * @param operino the entity to save
+     * @param user the user owning the operino
      * @return the persisted entity
      */
-    Operino save(Operino operino);
+    Operino save(Operino operino, User user);
 
     /**
      *  Get all the operinos.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -55,7 +57,7 @@ public interface OperinoService {
      * Search for the operino corresponding to the query.
      *
      *  @param query the query of the search
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */

@@ -1,12 +1,15 @@
 package cloud.operon.platform.web.rest;
 
 import cloud.operon.platform.OperonCloudPlatformApp;
+import cloud.operon.platform.domain.User;
 import cloud.operon.platform.repository.search.OperinoSearchRepository;
+import cloud.operon.platform.security.SecurityUtils;
 import cloud.operon.platform.service.OperinoService;
 
 import cloud.operon.platform.domain.Operino;
 import cloud.operon.platform.repository.OperinoRepository;
 import cloud.operon.platform.service.OperinoComponentService;
+import cloud.operon.platform.service.UserService;
 import cloud.operon.platform.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -47,6 +50,9 @@ public class OperinoResourceIntTest {
     private static final Boolean UPDATED_ACTIVE = true;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private OperinoRepository operinoRepository;
 
     @Autowired
@@ -76,7 +82,7 @@ public class OperinoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        OperinoResource operinoResource = new OperinoResource(operinoService, operinoComponentService);
+        OperinoResource operinoResource = new OperinoResource(operinoService, operinoComponentService, userService);
         this.restOperinoMockMvc = MockMvcBuilders.standaloneSetup(operinoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -206,7 +212,9 @@ public class OperinoResourceIntTest {
     @Transactional
     public void updateOperino() throws Exception {
         // Initialize the database
-        operinoService.save(operino);
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
+
+        operinoService.save(operino, user);
 
         int databaseSizeBeforeUpdate = operinoRepository.findAll().size();
 
@@ -255,7 +263,8 @@ public class OperinoResourceIntTest {
     @Transactional
     public void deleteOperino() throws Exception {
         // Initialize the database
-        operinoService.save(operino);
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
+        operinoService.save(operino, user);
 
         int databaseSizeBeforeDelete = operinoRepository.findAll().size();
 
@@ -277,7 +286,8 @@ public class OperinoResourceIntTest {
     @Transactional
     public void searchOperino() throws Exception {
         // Initialize the database
-        operinoService.save(operino);
+        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
+        operinoService.save(operino, user);
 
         // Search the operino
         restOperinoMockMvc.perform(get("/api/_search/operinos?query=id:" + operino.getId()))
