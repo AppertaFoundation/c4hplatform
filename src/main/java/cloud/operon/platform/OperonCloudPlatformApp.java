@@ -115,7 +115,7 @@ public class OperonCloudPlatformApp {
                 operino.setActive(true);
                 operino.setUser(userRepository.findOne(Long.valueOf(String.valueOf(i))));
 
-                for(int j=1; j<4; j++){
+                for(int j=1; j<=OperinoComponentType.values().length; j++){
                     OperinoComponent component = new OperinoComponent();
                     component.setAvailability(true);
                     if (i==4) {
