@@ -200,22 +200,22 @@ public class OperinoProvisionerImpl implements InitializingBean, OperinoProvisio
         ResponseEntity<List> getResponse;
         try {
             getResponse = restTemplate.exchange(domainUrl, HttpMethod.GET, getRequest, List.class);
+
+            log.info("getResponse = " + getResponse);
+            if(getResponse == null || getResponse.getStatusCode() != HttpStatus.OK) {
+                log.error("Unable to connect to ThinkEHR backend specified by: " + domainUrl);
+            } else {
+                // load patients from files
+                for(int i=0; i< 5; i++) {
+                    patients.addAll(loadPatientsList("data/patients" + (i + 1) + ".csv"));
+                    log.info("Loaded {} patients from file {}", patients.size(), "data/patients"+i+".csv");
+                }
+                log.info("Final number of patients = {}", patients.size());
+            }
         }
         catch (HttpClientErrorException e) {
-            throw new RuntimeException("Unable to connect to ThinkEHR backend specified by: " + domainUrl);
+            log.error("Unable to connect to ThinkEHR backend specified by: " + domainUrl);
         }
-
-        log.info("getResponse = " + getResponse);
-        if(getResponse == null || getResponse.getStatusCode() != HttpStatus.OK) {
-            throw new RuntimeException("Unable to connect to ThinkEHR backend specified by: " + domainUrl);
-        }
-
-        // load patients from files
-        for(int i=0; i< 5; i++) {
-            patients.addAll(loadPatientsList("data/patients" + (i + 1) + ".csv"));
-            log.info("Loaded {} patients from file {}", patients.size(), "data/patients"+i+".csv");
-        }
-        log.info("Final number of patients = {}", patients.size());
     }
 
     public List<Patient> loadPatientsList(String fileName) {
