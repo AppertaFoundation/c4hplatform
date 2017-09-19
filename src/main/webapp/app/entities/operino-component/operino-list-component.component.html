@@ -110,7 +110,7 @@
                         <select class="form-control" name="type" [(ngModel)]="operinoComponent.type" id="field_type"  required>
                             <option value="CDR" jhiTranslate="operonCloudPlatformApp.OperinoComponentType.CDR">CDR</option>
                             <option value="DEMOGRAPHICS" jhiTranslate="operonCloudPlatformApp.OperinoComponentType.DEMOGRAPHICS">DEMOGRAPHICS</option>
-                            <option value="TERMINOLOGY" jhiTranslate="operonCloudPlatformApp.OperinoComponentType.TERMINOLOGY">TERMINOLOGY</option>
+                            <!--<option value="TERMINOLOGY" jhiTranslate="operonCloudPlatformApp.OperinoComponentType.TERMINOLOGY">TERMINOLOGY</option>-->
                         </select>
                         <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
                             <small class="form-text text-danger"
