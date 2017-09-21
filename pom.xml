@@ -1164,18 +1164,13 @@
                                     </sources>
                                 </mapping>
                                 <mapping>
-                                    <directory>/etc/supervisor/conf.d</directory>
-                                    <sources>
-                                        <source>
-                                            <location>${project.build.directory}/etc/${project.artifactId}-supervisor.conf</location>
-                                        </source>
-                                    </sources>
-                                </mapping>
-                                <mapping>
                                     <directory>${app.home}</directory>
                                     <sources>
                                         <source>
                                             <location>${project.build.directory}/etc/run.sh</location>
+                                        </source>
+                                        <source>
+                                            <location>${project.build.directory}/etc/${project.artifactId}.service</location>
                                         </source>
                                         <source>
                                             <location>${project.basedir}/LICENSE.txt</location>

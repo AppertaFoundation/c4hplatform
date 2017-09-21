@@ -23,8 +23,15 @@ chown -Rf ${project.artifactId}:${project.artifactId} ${index.folder.location}
 echo "Creating ${project.artifactId} mysql database and user with permissions to access all ${project.artifactId}_db schemas"
 mysql -u root -e "CREATE DATABASE IF NOT EXISTS ${project.artifactId}_db DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci; GRANT ALL  ON ${project.artifactId}_db.* TO '${project.artifactId}'@'localhost' IDENTIFIED BY '${project.artifactId}'; FLUSH PRIVILEGES;"
 
-supervisorctl update $APP_NAME || true
-supervisorctl start $APP_NAME || true
+# Move service unit file from /tmp to /etc/systemd/system
+mv /opt/$APP_NAME/$APP_NAME.service /etc/systemd/system/$APP_NAME.service || true
+chmod 664 /etc/systemd/system/$APP_NAME.service || true
 
-# mv /tmp/${project.artifactId} /etc/init.d/${project.artifactId} || true
-# service ${project.artifactId} restart || true
+# Notify systemd that a new file has been added
+systemctl daemon-reload || true
+
+# Ensure service is started at boot
+systemctl enable $APP_NAME.service || true
+
+# Restart service
+systemctl restart $APP_NAME || true
