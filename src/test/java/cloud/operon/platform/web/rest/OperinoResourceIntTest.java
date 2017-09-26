@@ -82,7 +82,7 @@ public class OperinoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        OperinoResource operinoResource = new OperinoResource(operinoService, operinoComponentService, userService);
+        OperinoResource operinoResource = new OperinoResource(operinoService, operinoComponentService);
         this.restOperinoMockMvc = MockMvcBuilders.standaloneSetup(operinoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

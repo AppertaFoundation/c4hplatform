@@ -42,12 +42,10 @@ public class OperinoResource {
 
     private final OperinoService operinoService;
     private final OperinoComponentService operinoComponentService;
-    private final UserService userService;
 
-    public OperinoResource(OperinoService operinoService, OperinoComponentService operinoComponentService, UserService userService) {
+    public OperinoResource(OperinoService operinoService, OperinoComponentService operinoComponentService) {
         this.operinoService = operinoService;
         this.operinoComponentService = operinoComponentService;
-        this.userService = userService;
     }
 
     /**
@@ -64,8 +62,7 @@ public class OperinoResource {
         if (operino.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new operino cannot already have an ID")).body(null);
         }
-        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
-        Operino result = operinoService.save(operino, user);
+        Operino result = operinoService.save(operino, operino.getUser());
         return ResponseEntity.created(new URI("/api/operinos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -89,8 +86,7 @@ public class OperinoResource {
         }
         Operino verifiedOperino = operinoService.verifyOwnershipAndGet(operino.getId());
         if(verifiedOperino != null){
-            User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
-            Operino result = operinoService.save(operino, user);
+            Operino result = operinoService.save(operino, operino.getUser());
             return ResponseEntity.ok()
                     .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operino.getId().toString()))
                     .body(result);
@@ -190,8 +186,7 @@ public class OperinoResource {
             OperinoComponent result = operinoComponentService.save(operinoComponent);
             operino.addComponent(result);
             // also save operino
-            User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
-            operinoService.save(operino, user);
+            operinoService.save(operino, operino.getUser());
             return ResponseEntity.created(new URI("/api/operino-components/" + result.getId()))
                     .headers(HeaderUtil.createEntityCreationAlert(COMPONENT_ENTITY_NAME, result.getId().toString()))
                     .body(result);
@@ -248,8 +243,7 @@ public class OperinoResource {
             operino = operino.removeComponents(operinoComponent);
             operinoComponentService.delete(componentId);
             // also save operino
-            User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
-            operinoService.save(operino, user);
+            operinoService.save(operino, operino.getUser());
             log.debug("\n\n\n\n\n\n\n Getting components for Operino : {}", operinoService.findOne(id).getComponents());
             return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(COMPONENT_ENTITY_NAME, componentId.toString())).build();
         } else {
