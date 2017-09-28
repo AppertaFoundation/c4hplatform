@@ -63,7 +63,7 @@ public class OperinoResource {
         }
 
         if (operino.getComponents().size() == 0) {
-            operino = populateWithComponents(operino);
+            operino = populateWithComponents(operino, OperinoComponentType.CDR, OperinoComponentType.DEMOGRAPHICS);
         }
 
         Operino result = operinoService.save(operino);
@@ -72,15 +72,15 @@ public class OperinoResource {
             .body(result);
     }
 
-    private Operino populateWithComponents(@Valid @RequestBody Operino operino) {
-        for (int j = 1; j <= OperinoComponentType.values().length; j++) {
+    private Operino populateWithComponents(@Valid @RequestBody Operino operino, OperinoComponentType... types) {
+        for (OperinoComponentType type : types) {
             OperinoComponent component = new OperinoComponent();
+            component.setType(type);
             component.setAvailability(true);
             component.setHosting(HostingType.NON_N3);
-            component.setType(OperinoComponentType.values()[j - 1]);
-            component.setDiskSpace(Long.valueOf(String.valueOf(j * 1000)));
-            component.setRecordsNumber(Long.valueOf(String.valueOf(j * 1000)));
-            component.setTransactionsLimit(Long.valueOf(String.valueOf(j * 1000)));
+            component.setDiskSpace(Long.valueOf(String.valueOf(1000)));
+            component.setRecordsNumber(Long.valueOf(String.valueOf(1000)));
+            component.setTransactionsLimit(Long.valueOf(String.valueOf(1000)));
             operino.addComponents(component);
         }
         return operino;
