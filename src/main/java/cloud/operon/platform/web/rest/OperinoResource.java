@@ -1,7 +1,5 @@
 package cloud.operon.platform.web.rest;
 
-import cloud.operon.platform.domain.enumeration.HostingType;
-import cloud.operon.platform.domain.enumeration.OperinoComponentType;
 import cloud.operon.platform.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -61,30 +59,13 @@ public class OperinoResource {
         if (operino.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new operino cannot already have an ID")).body(null);
         }
-
-        if (operino.getComponents().size() == 0) {
-            operino = populateWithComponents(operino, OperinoComponentType.CDR, OperinoComponentType.DEMOGRAPHICS);
-        }
-
+        operino = operinoService.createOperino(operino);
         Operino result = operinoService.save(operino);
         return ResponseEntity.created(new URI("/api/operinos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
-    private Operino populateWithComponents(@Valid @RequestBody Operino operino, OperinoComponentType... types) {
-        for (OperinoComponentType type : types) {
-            OperinoComponent component = new OperinoComponent();
-            component.setType(type);
-            component.setAvailability(true);
-            component.setHosting(HostingType.NON_N3);
-            component.setDiskSpace(Long.valueOf(String.valueOf(1000)));
-            component.setRecordsNumber(Long.valueOf(String.valueOf(1000)));
-            component.setTransactionsLimit(Long.valueOf(String.valueOf(1000)));
-            operino.addComponents(component);
-        }
-        return operino;
-    }
 
     /**
      * PUT  /operinos : Updates an existing operino.

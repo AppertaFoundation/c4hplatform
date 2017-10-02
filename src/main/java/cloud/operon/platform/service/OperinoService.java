@@ -2,6 +2,10 @@ package cloud.operon.platform.service;
 
 import cloud.operon.platform.domain.Notification;
 import cloud.operon.platform.domain.Operino;
+import cloud.operon.platform.domain.OperinoComponent;
+import cloud.operon.platform.domain.enumeration.HostingType;
+import cloud.operon.platform.domain.enumeration.OperinoComponentType;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,43 +25,42 @@ public interface OperinoService {
     Operino save(Operino operino);
 
     /**
-     *  Get all the operinos.
-     *  
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * Get all the operinos.
+     *
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     Page<Operino> findAll(Pageable pageable);
 
     /**
-     *  Get the "id" operino if the current user is the owner or has ADMIN role
+     * Get the "id" operino if the current user is the owner or has ADMIN role
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     Operino verifyOwnershipAndGet(Long id);
 
     /**
-     *  Get the "id" operino.
+     * Get the "id" operino.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     Operino findOne(Long id);
 
     /**
-     *  Delete the "id" operino.
+     * Delete the "id" operino.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     void delete(Long id);
 
     /**
      * Search for the operino corresponding to the query.
      *
-     *  @param query the query of the search
-     *  
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param query    the query of the search
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     Page<Operino> search(String query, Pageable pageable);
 
@@ -66,4 +69,9 @@ public interface OperinoService {
     Notification sendNotification(Notification notification);
 
     Page<Notification> getNotifications(Pageable pageable);
+
+    /**
+     * Populates the given Operino if the service is configured to do so
+     */
+    Operino createOperino(Operino operino);
 }
