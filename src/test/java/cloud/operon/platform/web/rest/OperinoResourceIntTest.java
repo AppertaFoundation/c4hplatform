@@ -91,14 +91,14 @@ public class OperinoResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
     public static Operino createEntity(EntityManager em) {
         Operino operino = new Operino()
-                .name(DEFAULT_NAME)
-                .active(DEFAULT_ACTIVE);
+            .name(DEFAULT_NAME)
+            .active(DEFAULT_ACTIVE);
         return operino;
     }
 
@@ -212,17 +212,15 @@ public class OperinoResourceIntTest {
     @Transactional
     public void updateOperino() throws Exception {
         // Initialize the database
-        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
-
-        operinoService.save(operino, user);
+        operinoService.save(operino);
 
         int databaseSizeBeforeUpdate = operinoRepository.findAll().size();
 
         // Update the operino
         Operino updatedOperino = operinoRepository.findOne(operino.getId());
         updatedOperino
-                .name(UPDATED_NAME)
-                .active(UPDATED_ACTIVE);
+            .name(UPDATED_NAME)
+            .active(UPDATED_ACTIVE);
 
         restOperinoMockMvc.perform(put("/api/operinos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -263,8 +261,7 @@ public class OperinoResourceIntTest {
     @Transactional
     public void deleteOperino() throws Exception {
         // Initialize the database
-        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
-        operinoService.save(operino, user);
+        operinoService.save(operino);
 
         int databaseSizeBeforeDelete = operinoRepository.findAll().size();
 
@@ -286,8 +283,7 @@ public class OperinoResourceIntTest {
     @Transactional
     public void searchOperino() throws Exception {
         // Initialize the database
-        User user = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get();
-        operinoService.save(operino, user);
+        operinoService.save(operino);
 
         // Search the operino
         restOperinoMockMvc.perform(get("/api/_search/operinos?query=id:" + operino.getId()))
