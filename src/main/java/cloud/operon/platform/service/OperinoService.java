@@ -17,49 +17,47 @@ public interface OperinoService {
      * Save a operino.
      *
      * @param operino the entity to save
-     * @param user the user owning the operino
      * @return the persisted entity
      */
-    Operino save(Operino operino, User user);
+    Operino save(Operino operino);
 
     /**
-     *  Get all the operinos.
+     * Get all the operinos.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     Page<Operino> findAll(Pageable pageable);
 
     /**
-     *  Get the "id" operino if the current user is the owner or has ADMIN role
+     * Get the "id" operino if the current user is the owner or has ADMIN role
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     Operino verifyOwnershipAndGet(Long id);
 
     /**
-     *  Get the "id" operino.
+     * Get the "id" operino.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     Operino findOne(Long id);
 
     /**
-     *  Delete the "id" operino.
+     * Delete the "id" operino.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     void delete(Long id);
 
     /**
      * Search for the operino corresponding to the query.
      *
-     *  @param query the query of the search
-     *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param query    the query of the search
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     Page<Operino> search(String query, Pageable pageable);
 
@@ -68,4 +66,16 @@ public interface OperinoService {
     Notification sendNotification(Notification notification);
 
     Page<Notification> getNotifications(Pageable pageable);
+
+    /**
+     * Creates an Operino with the given parameters
+     */
+    static Operino createOperino(String name, User user, boolean active, boolean provision) {
+        Operino operino = new Operino();
+        operino.setName(name);
+        operino.setUser(user);
+        operino.setActive(active);
+        operino.setProvision(provision);
+        return operino;
+    }
 }
