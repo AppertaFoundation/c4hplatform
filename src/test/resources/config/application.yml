@@ -40,7 +40,7 @@ spring:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
-            hibernate.hbm2ddl.auto: validate
+            hibernate.hbm2ddl.auto: update
     data:
         elasticsearch:
             cluster-name:
@@ -98,3 +98,22 @@ jhipster:
 # ===================================================================
 
 application:
+
+provisioner:
+    domainUrl: https://test.operon.systems/ehrscape-manager/rest/domain/
+    cdrUrl: https://test.operon.systems/rest/v1/
+    explorerUrl: https://test.operon.systems/explorer/explorer
+    subjectNamespace: uk.nhs.nhs_number
+    agentName: operon_provisioner
+    username: oprn_hcbox
+    password: XioTAJoO479
+# Notifier settings
+notifier:
+    openEhrUrl: https://cdr.code4health.org/rest/v1/composition/
+    teamName: Code4Health team
+    skipCompositionIdValidation: true
+thinkehr:
+    baseUrl: https://test.operon.systems/rest/v1/
+    managerUrl: https://test.operon.systems/explorer/
+    adminName: oprn_hcbox
+    password: XioTAJoO479
