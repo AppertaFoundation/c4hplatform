@@ -1,17 +1,12 @@
 package cloud.operon.platform.web.rest;
 
 import cloud.operon.platform.OperonCloudPlatformApp;
-import cloud.operon.platform.domain.User;
-import cloud.operon.platform.repository.search.OperinoSearchRepository;
-import cloud.operon.platform.security.SecurityUtils;
-import cloud.operon.platform.service.OperinoService;
-
 import cloud.operon.platform.domain.Operino;
 import cloud.operon.platform.repository.OperinoRepository;
+import cloud.operon.platform.repository.search.OperinoSearchRepository;
 import cloud.operon.platform.service.OperinoComponentService;
-import cloud.operon.platform.service.UserService;
+import cloud.operon.platform.service.OperinoService;
 import cloud.operon.platform.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,9 +43,6 @@ public class OperinoResourceIntTest {
 
     private static final Boolean DEFAULT_ACTIVE = false;
     private static final Boolean UPDATED_ACTIVE = true;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private OperinoRepository operinoRepository;
