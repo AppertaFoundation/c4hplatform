@@ -7,7 +7,7 @@
                 "createSandbox": "Create Sandbox Operino",
                 "createOrEditLabel": "Create or edit a Operino",
                 "search": "Search for Operino",
-                "missing": "Oh no! You don't have any operinos! You can create a new Operino using the green button above or you can create the Sandbox operino to get up and running quickly! "
+                "missing": "Oh no! You don't have any operinos! You can create a new Operino using the green button above or you can create the Sandbox operino to get up and running quickly!"
             },
             "created": "A new Operino is created with identifier {{ param }}",
             "updated": "A Operino is updated with identifier {{ param }}",
@@ -35,7 +35,7 @@
                     "a": "Use this component to enable storage of patient or client records. The built-in openEHR standard allows the use of many ready-made clinical data templates and elements."
                 },
                 "demographics": {
-                    "q": "What is a Demographis component?",
+                    "q": "What is a Demographics component?",
                     "a": "Use this module to maintain an index of patients or clients with DOB, age, address and other subject-related information or identifiers."
                 },
                 "terminology": {

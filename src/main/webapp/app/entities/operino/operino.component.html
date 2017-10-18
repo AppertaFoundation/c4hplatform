@@ -1,11 +1,9 @@
 <div>
     <h2>
-        <span jhiTranslate="operonCloudPlatformApp.operino.home.title">Operinos</span>
+        <span jhiTranslateDisabled="operonCloudPlatformApp.operino.home.title">Operinos</span>
         <button class="btn btn-success float-right create-operino" [routerLink]="['/', { outlets: { popup: ['operino-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span class="hidden-sm-down"  jhiTranslate="operonCloudPlatformApp.operino.home.createLabel">
-            Create new Operino
-            </span>
+            <span class="hidden-sm-down"  jhiTranslateDisabled="operonCloudPlatformApp.operino.home.createLabel">Create a new Operino</span>
         </button>
     </h2>
     <jhi-alert></jhi-alert>
@@ -29,19 +27,19 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <div class="alert alert-warning ">
-                    <span jhiTranslate="operonCloudPlatformApp.operino.home.missing">Oh no! You do not have operinos! Would you like to create one?</span>
+                    <span jhiTranslateDisabled="operonCloudPlatformApp.operino.home.missing">Oh no! You don't have any operinos! You can create a new Operino using the green button above or you can create the Sandbox operino to get up and running quickly!</span>
                 </div>
             </div>
             <!--<div class="col-sm-4">-->
                 <!--<button class="btn btn-warning create-operino" [routerLink]="['/', { outlets: { popup: ['operino-new'] } }]">-->
                     <!--<span class="fa fa-flask"></span>-->
-                    <!--<span class="hidden-sm-down"  jhiTranslate="operonCloudPlatformApp.operino.home.createSandbox">-->
+                    <!--<span class="hidden-sm-down"  jhiTranslateDisabled="operonCloudPlatformApp.operino.home.createSandbox">-->
                     <!--Create Sandbox Operino-->
                     <!--</span>-->
                 <!--</button>-->
                 <!--<button class="btn btn-success create-operino" [routerLink]="['/', { outlets: { popup: ['operino-new'] } }]">-->
                     <!--<span class="fa fa-plus"></span>-->
-                    <!--<span class="hidden-sm-down"  jhiTranslate="operonCloudPlatformApp.operino.home.createLabel">-->
+                    <!--<span class="hidden-sm-down"  jhiTranslateDisabled="operonCloudPlatformApp.operino.home.createLabel">-->
                     <!--Create new Operino-->
                     <!--</span>-->
                 <!--</button>-->
@@ -49,20 +47,20 @@
         </div>
         <hr>
         <div class="alert alert-info ">
-            <h4 jhiTranslate="operonCloudPlatformApp.operino.sandbox.what.q">What is a Sandox Operino?</h4>
-            <p jhiTranslate="operonCloudPlatformApp.operino.sandbox.what.a"></p>
+            <h4 jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.what.q">What is an Operino?</h4>
+            <p jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.what.a">The building blocks of the platform are called Operinos. An Operino provides a container for a set of services (or Operino components) from the platform that you need for a particular application.</p>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.sandbox.cdr.q">CDR</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.cdr.q">What is a CDR?</span></dt>
                 <dd>
-                    <span jhiTranslate="operonCloudPlatformApp.operino.sandbox.cdr.a"></span>
+                    <span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.cdr.a">Use this component to enable storage of patient or client records. The built-in openEHR standard allows the use of many ready-made clinical data templates and elements.</span>
                 </dd>
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.sandbox.demographics.q">Demographics</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.demographics.q">What is a Demographics component?</span></dt>
                 <dd>
-                    <span jhiTranslate="operonCloudPlatformApp.operino.sandbox.demographics.a">hmmm</span>
+                    <span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.demographics.a">Use this module to maintain an index of patients or clients with DOB, age, address and other subject-related information or identifiers.</span>
                 </dd>
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.sandbox.terminology.q">Terminology</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.terminology.q">What is a Terminology server?</span></dt>
                 <dd>
-                    <span jhiTranslate="operonCloudPlatformApp.operino.sandbox.terminology.a">hmmmm</span>
+                    <span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.terminology.a">Use this module to give your users easy access to terms in their records. This makes searching and standardization of data easier.</span>
                 </dd>
             </dl>
         </div>
@@ -71,9 +69,9 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="name"><span jhiTranslate="operonCloudPlatformApp.operino.name">Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="active"><span jhiTranslate="operonCloudPlatformApp.operino.active">Active</span> <span class="fa fa-sort"></span></th>
-            <th *jhiHasAnyAuthority="'ROLE_ADMIN'" jhiSortBy="user.login"><span jhiTranslate="operonCloudPlatformApp.operino.user">User</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span jhiTranslateDisabled="operonCloudPlatformApp.operino.name">Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="active"><span jhiTranslateDisabled="operonCloudPlatformApp.operino.active">Active</span> <span class="fa fa-sort"></span></th>
+            <th *jhiHasAnyAuthority="'ROLE_ADMIN'" jhiSortBy="user.login"><span jhiTranslateDisabled="operonCloudPlatformApp.operino.user">User</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -92,14 +90,14 @@
                                 [routerLink]="['../operino', operino.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                            <span class="hidden-md-down" jhiTranslateDisabled="entity.action.view">View</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'operino/'+ operino.id + '/delete'} }]"
                                 replaceUrl="true"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                            <span class="hidden-md-down" jhiTranslateDisabled="entity.action.delete">Delete</span>
                         </button>
                     </div>
                 </td>

@@ -10,15 +10,15 @@
     <jhi-alert-error></jhi-alert-error>
     <div *ngIf="operino.config" class="row">
         <!--<h4>API Configuration</h4>-->
-        <h4 class="col-sm-3" jhiTranslate="operonCloudPlatformApp.operino.config.token">Token</h4>
+        <h4 class="col-sm-3" jhiTranslateDisabled="operonCloudPlatformApp.operino.config.token">Token</h4>
         <pre class="col-sm-9 text-muted">Basic {{operino.config.token}}</pre>
         <div class="col-sm-6">
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.domain">Domain</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.domain">Domain</span></dt>
                 <dd class="text-muted">
                     {{operino.domain}}
                 </dd>
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.config.username">Usename</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.config.username">Usename</span></dt>
                 <dd class="text-muted">
                     {{operino.config.username}}
                 </dd>
@@ -26,11 +26,11 @@
         </div>
         <div class="col-sm-6">
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.config.domainId">Domain Id</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.config.domainId">Domain Id</span></dt>
                 <dd class="text-muted">
                     {{operino.config.domainSystemId}}
                 </dd>
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.config.password">Password</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.config.password">Password</span></dt>
                 <dd class="text-muted">
                     {{operino.config.password}}
                 </dd>
@@ -43,45 +43,45 @@
         <button type="submit"
                 (click)="previousState()"
                 class="btn btn-info">
-            <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslateDisabled="entity.action.back">Back</span>
         </button>
         <button *ngIf="!isEditing" type="button" class="btn btn-warning"
                 [routerLink]="['../', operino.id, 'edit']"
                 replaceUrl="true">
-            <span class="fa fa-edit"></span>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            <span class="fa fa-edit"></span>&nbsp;<span jhiTranslateDisabled="entity.action.edit">Edit</span>
         </button>
         <button *ngIf="isEditing" type="button" class="btn btn-danger" [routerLink]="['../']"
                 replaceUrl="true">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslateDisabled="entity.action.cancel">Cancel</span>
         </button>
         <button *ngIf="isEditing" type="button" (click)="save()" class="btn btn-success">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslateDisabled="entity.action.save">Save</span>
         </button>
     </div>
     <hr>
     <div>
-        <h4 jhiTranslate="operonCloudPlatformApp.operino.resources.header">Resources</h4>
+        <h4 jhiTranslateDisabled="operonCloudPlatformApp.operino.resources.header">Resources</h4>
         <p>
             If needed, use the username and password provided above to login.
         </p>
         <div class="col-sm-10">
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.resources.explorer.title">Manage resources (archetypes, templates) for your Operino CDR</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.resources.explorer.title">Manage resources (archetypes, templates) for your Operino CDR</span></dt>
                 <dd>
-                    <a href="https://explorer.code4health.org/explorer" target="_blank"><span jhiTranslate="operonCloudPlatformApp.operino.resources.explorer.url">
+                    <a href="https://explorer.code4health.org/explorer" target="_blank"><span jhiTranslateDisabled="operonCloudPlatformApp.operino.resources.explorer.url">
                         https://explorer.code4health.org/explorer
                     </span></a>
                 </dd>
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.resources.api.title">Explore API for CDR</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.resources.api.title">Explore API for CDR</span></dt>
                 <dd>
                     <a href="https://explorer.code4health.org/api-explorer" target="_blank">
-                        <span jhiTranslate="operonCloudPlatformApp.operino.resources.api.url">https://explorer.code4health.org/api-explorer</span>
+                        <span jhiTranslateDisabled="operonCloudPlatformApp.operino.resources.api.url">https://explorer.code4health.org/api-explorer</span>
                     </a>
                 </dd>
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.resources.docs.title">Explore Documentation</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.resources.docs.title">Explore Documentation</span></dt>
                 <dd>
                     <a href="https://docs.code4health.org" target="_blank">
-                        <span jhiTranslate="operonCloudPlatformApp.operino.resources.docs.url">https://docs.code4health.org</span>
+                        <span jhiTranslateDisabled="operonCloudPlatformApp.operino.resources.docs.url">https://docs.code4health.org</span>
                     </a>
                 </dd>
             </dl>
