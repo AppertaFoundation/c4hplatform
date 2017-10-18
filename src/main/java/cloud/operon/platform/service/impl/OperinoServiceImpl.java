@@ -243,7 +243,7 @@ public class OperinoServiceImpl implements OperinoService {
                 component.setDiskSpace(Long.valueOf(String.valueOf(1000)));
                 component.setRecordsNumber(Long.valueOf(String.valueOf(1000)));
                 component.setTransactionsLimit(Long.valueOf(String.valueOf(1000)));
-                operino.addComponents(component);
+                operino.addComponent(component);
             }
         }
         return operino;
