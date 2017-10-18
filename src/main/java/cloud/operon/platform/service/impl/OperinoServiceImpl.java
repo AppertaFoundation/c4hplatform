@@ -2,7 +2,10 @@ package cloud.operon.platform.service.impl;
 
 import cloud.operon.platform.domain.Notification;
 import cloud.operon.platform.domain.Operino;
+import cloud.operon.platform.domain.OperinoComponent;
+import cloud.operon.platform.domain.enumeration.HostingType;
 import cloud.operon.platform.domain.enumeration.NotificationStatus;
+import cloud.operon.platform.domain.enumeration.OperinoComponentType;
 import cloud.operon.platform.repository.NotificationRepository;
 import cloud.operon.platform.repository.OperinoRepository;
 import cloud.operon.platform.repository.search.OperinoSearchRepository;
@@ -14,11 +17,14 @@ import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,8 +35,8 @@ import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
  */
 @Service
 @Transactional
+@ConfigurationProperties(prefix = "operinoService", ignoreUnknownFields = false)
 public class OperinoServiceImpl implements OperinoService {
-
     private final Logger log = LoggerFactory.getLogger(OperinoServiceImpl.class);
 
     private final OperinoRepository operinoRepository;
@@ -39,6 +45,8 @@ public class OperinoServiceImpl implements OperinoService {
     private final OperinoSearchRepository operinoSearchRepository;
     private final RabbitTemplate rabbitTemplate;
     private final ThinkEhrRestClient thinkEhrRestClient;
+
+    private Boolean createNewOperinoWithComponents;
 
     public OperinoServiceImpl(OperinoRepository operinoRepository,
                               NotificationRepository notificationRepository,
@@ -217,4 +225,31 @@ public class OperinoServiceImpl implements OperinoService {
         }
     }
 
+    /**
+     * Creates and populates the given Operino with components of the specified types
+     *
+     * @param operino The Operino to be populated
+     * @return The same Operino with default components of the specified types
+     */
+    public Operino createOperino(Operino operino) {
+        log.debug("Creating Operino (with components = {})", createNewOperinoWithComponents);
+        if (createNewOperinoWithComponents && operino.getComponents().size() == 0) {
+            OperinoComponentType[] types = {OperinoComponentType.CDR, OperinoComponentType.DEMOGRAPHICS};
+            for (OperinoComponentType type : types) {
+                OperinoComponent component = new OperinoComponent();
+                component.setType(type);
+                component.setAvailability(true);
+                component.setHosting(HostingType.NON_N3);
+                component.setDiskSpace(Long.valueOf(String.valueOf(1000)));
+                component.setRecordsNumber(Long.valueOf(String.valueOf(1000)));
+                component.setTransactionsLimit(Long.valueOf(String.valueOf(1000)));
+                operino.addComponents(component);
+            }
+        }
+        return operino;
+    }
+
+    public void setCreateNewOperinoWithComponents(Boolean createNewOperinoWithComponents) {
+        this.createNewOperinoWithComponents = createNewOperinoWithComponents;
+    }
 }
