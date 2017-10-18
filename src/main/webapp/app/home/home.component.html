@@ -2,42 +2,42 @@
     <div class="col-md-4">
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
-                <span *ngIf="account" jhiTranslate="home.logged.message"
-                      translateValues="{username: '{{account.login}}'}"> You are logged in as user "{{account.login}}". </span>
+                <span *ngIf="account" jhiTranslateDisabled="home.logged.message"
+                      >You are logged in as user "{{account.login}}". </span>
             </div>
             <div class="alert alert-orange" *ngSwitchCase="true">
                 <h4>
                     <a routerLink="operino" class="align-middle">
                         <i class="fa fa-bolt" aria-hidden="true"></i>
-                        View your <span jhiTranslate="global.menu.entities.operino">Operino</span>s
+                        View your <span jhiTranslateDisabled="global.menu.entities.operino">Operino</span>s
                     </a>
                 </h4>
             </div>
 
             <div class="alert alert-warning" *ngSwitchCase="false">
-                <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-                <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a>
+                <span jhiTranslateDisabled="global.messages.info.authenticated.prefix">If you want to </span>
+                <a class="alert-link" (click)="login()" jhiTranslateDisabled="global.messages.info.authenticated.link">sign in</a>
             </div>
             <div class="alert alert-warning" *ngSwitchCase="false">
-                <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>
-                <a class="alert-link" routerLink="register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
+                <span jhiTranslateDisabled="global.messages.info.register.noaccount">You don't have an account yet?</span>
+                <a class="alert-link" routerLink="register" jhiTranslateDisabled="global.messages.info.register.link">Register a new account</a>
             </div>
         </div>
         <div class="alert alert-info">
-            <p jhiTranslate="home.question">
+            <p jhiTranslateDisabled="home.question">
                 If you have any question on Code4Health Platform:
             </p>
             <ul>
-                <li><i class="fa fa-book" aria-hidden="true"></i>&nbsp;<a href="https://docs.code4health.org" target="_blank" jhiTranslate="home.link.docs">Code4Health Documentation</a></li>
-                <li><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;<a href="https://code4health.org/feedback" target="_blank" jhiTranslate="home.link.support">Code4Health Support</a></li>
+                <li><i class="fa fa-book" aria-hidden="true"></i>&nbsp;<a href="https://docs.code4health.org" target="_blank" jhiTranslateDisabled="home.link.docs">Code4Health Platform Documentation</a></li>
+                <li><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;<a href="https://code4health.org/feedback" target="_blank" jhiTranslateDisabled="home.link.support">Code4Health Support</a></li>
             </ul>
             <p>
-                <span jhiTranslate="home.like">If you like Code4Health Platform, don't forget to give us a star on</span> <a href="https://github.com/AppertaFoundation/Code4Health-Platform" target="_blank" jhiTranslate="home.github">Github</a>!
+                <span jhiTranslateDisabled="home.like">If you like Code4Health, don't forget to give us a star on</span> <a href="https://github.com/AppertaFoundation/Code4Health-Platform" target="_blank" jhiTranslateDisabled="home.github">GitHub</a>!
             </p>
         </div>
     </div>
     <div class="col-md-8">
-        <h3 jhiTranslate="home.title">Welcome, Code4Health User!</h3>
+        <h3 jhiTranslateDisabled="home.title">Welcome to Code4Health Platform</h3>
         <div >
             The Code4Health Platform provides an open sandbox environment for anyone who wants to discover,
             demonstrate, test or build health and care solutions by simulating a wide range of open systems and

@@ -1,10 +1,10 @@
 <div>
     <h4>
-        <span jhiTranslate="operonCloudPlatformApp.operinoComponent.home.title">Operino Components</span>
+        <span jhiTranslateDisabled="operonCloudPlatformApp.operinoComponent.home.title">Operino Components</span>
         <button class="btn btn-success float-right create-operino-component" [routerLink]="['/', { outlets: { popup: 'operino-component-new/'+ operino.id + '/create'} }]">
             <span class="fa fa-plus"></span>
-            <span class="hidden-sm-down"  jhiTranslate="operonCloudPlatformApp.operinoComponent.home.createLabel">
-            Create new Operino Component
+            <span class="hidden-sm-down"  jhiTranslateDisabled="operonCloudPlatformApp.operinoComponent.home.createLabel">
+            Add an Operino Component
             </span>
         </button>
     </h4>
@@ -14,26 +14,26 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <div class="alert alert-warning ">
-                    <span jhiTranslate="operonCloudPlatformApp.operinoComponent.home.missing">Oh no! You do not have operino components! Would you like to create one?</span>
+                    <span jhiTranslateDisabled="operonCloudPlatformApp.operinoComponent.home.missing">Oh no! You don't have any operino components! You can add a component using the green button 'Add an Operino Component' button.</span>
                 </div>
             </div>
         </div>
         <hr>
         <div class="alert alert-info ">
-            <h4 jhiTranslate="operonCloudPlatformApp.operino.sandbox.what.q">What is a Sandox Operino?</h4>
-            <p jhiTranslate="operonCloudPlatformApp.operino.sandbox.what.a"></p>
+            <h4 jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.what.q">What is an Operino?</h4>
+            <p jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.what.a">The building blocks of the platform are called Operinos. An Operino provides a container for a set of services (or Operino components) from the platform that you need for a particular application.</p>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.sandbox.cdr.q">CDR</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.cdr.q">What is a CDR?</span></dt>
                 <dd>
-                    <span jhiTranslate="operonCloudPlatformApp.operino.sandbox.cdr.a"></span>
+                    <span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.cdr.a">Use this component to enable storage of patient or client records. The built-in openEHR standard allows the use of many ready-made clinical data templates and elements.</span>
                 </dd>
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.sandbox.demographics.q">Demographics</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.demographics.q">What is a Demographics component?</span></dt>
                 <dd>
-                    <span jhiTranslate="operonCloudPlatformApp.operino.sandbox.demographics.a">hmmm</span>
+                    <span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.demographics.a">Use this module to maintain an index of patients or clients with DOB, age, address and other subject-related information or identifiers.</span>
                 </dd>
-                <dt><span jhiTranslate="operonCloudPlatformApp.operino.sandbox.terminology.q">Terminology</span></dt>
+                <dt><span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.terminology.q">What is a Terminology server?</span></dt>
                 <dd>
-                    <span jhiTranslate="operonCloudPlatformApp.operino.sandbox.terminology.a">hmmmm</span>
+                    <span jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.terminology.a">Use this module to give your users easy access to terms in their records. This makes searching and standardization of data easier.</span>
                 </dd>
             </dl>
         </div>
@@ -48,73 +48,26 @@
                 <span><b>{{operinoComponent.type}}</b></span>
                 <button class="btn btn-danger btn-sm float-right create-operino-component" [routerLink]="['/', { outlets: { popup: 'operino-component/'+ operino.id + '/delete/' + operinoComponent.id}  }]">
                     <span class="fa fa-remove"></span>
-                    <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                    <span class="hidden-md-down" jhiTranslateDisabled="entity.action.delete">Delete</span>
                 </button>
             </template>
             <template ngbPanelContent>
                 <div class="alert alert-info">
-                    <span *ngIf="operinoComponent.type === 'CDR'" jhiTranslate="operonCloudPlatformApp.operino.sandbox.cdr.a"></span>
-                    <span *ngIf="operinoComponent.type === 'DEMOGRAPHICS'" jhiTranslate="operonCloudPlatformApp.operino.sandbox.demographics.a"></span>
-                    <span *ngIf="operinoComponent.type === 'TERMINOLOGY'" jhiTranslate="operonCloudPlatformApp.operino.sandbox.terminology.a"></span>
+                    <span *ngIf="operinoComponent.type === 'CDR'" jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.cdr.a">Use this component to enable storage of patient or client records. The built-in openEHR standard allows the use of many ready-made clinical data templates and elements.</span>
+                    <span *ngIf="operinoComponent.type === 'DEMOGRAPHICS'" jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.demographics.a">Use this module to maintain an index of patients or clients with DOB, age, address and other subject-related information or identifiers.</span>
+                    <span *ngIf="operinoComponent.type === 'TERMINOLOGY'" jhiTranslateDisabled="operonCloudPlatformApp.operino.sandbox.terminology.a">Use this module to give your users easy access to terms in their records. This makes searching and standardization of data easier.</span>
                 </div>
                 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
                     <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="operonCloudPlatformApp.operinoComponent.hosting" for="field_hosting">Hosting</label>
-                        <select class="form-control" name="hosting" [(ngModel)]="operinoComponent.hosting" id="field_hosting"  required>
-                            <option value="N3" jhiTranslate="operonCloudPlatformApp.HostingType.N3">N3</option>
-                            <option value="NON_N3" jhiTranslate="operonCloudPlatformApp.HostingType.NON_N3">NON_N3</option>
-                        </select>
-                        <div [hidden]="!(editForm.controls.hosting?.dirty && editForm.controls.hosting?.invalid)">
-                            <small class="form-text text-danger"
-                                   [hidden]="!editForm.controls.hosting?.errors?.required" jhiTranslate="entity.validation.required">
-                                This field is required.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="operonCloudPlatformApp.operinoComponent.availability" for="field_availability">Availability</label>
+                        <label class="form-control-label" jhiTranslateDisabled="operonCloudPlatformApp.operinoComponent.availability" for="field_availability">Active</label>
                         <ui-switch size="small" class="form-control" name="availability" id="field_availability" [(ngModel)]="operinoComponent.availability"></ui-switch>
                     </div>
-                    <!--<div class="form-group">-->
-                        <!--<label class="form-control-label" jhiTranslate="operonCloudPlatformApp.operinoComponent.applyLimits" for="field_applyLimits">Apply Limits</label>-->
-                        <!--<ui-switch size="small" class="form-control" name="applyLimits" id="field_applyLimits" [(ngModel)]="operinoComponent.applyLimits"></ui-switch>-->
-                    <!--</div>-->
-                    <!--<div  *ngIf="operinoComponent.applyLimits">-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="form-control-label" jhiTranslate="operonCloudPlatformApp.operinoComponent.recordsNumber" for="field_recordsNumber">Records Number</label>-->
-                            <!--<input type="number" class="form-control" name="recordsNumber" id="field_recordsNumber"-->
-                                   <!--[(ngModel)]="operinoComponent.recordsNumber"-->
-                                    <!--/>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="form-control-label" jhiTranslate="operonCloudPlatformApp.operinoComponent.transactionsLimit" for="field_transactionsLimit">Transactions Limit</label>-->
-                            <!--<input type="number" class="form-control" name="transactionsLimit" id="field_transactionsLimit"-->
-                                   <!--[(ngModel)]="operinoComponent.transactionsLimit"-->
-                                    <!--/>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="form-control-label" jhiTranslate="operonCloudPlatformApp.operinoComponent.diskSpace" for="field_diskSpace">Disk Space</label>-->
-                            <!--<input type="number" class="form-control" name="diskSpace" id="field_diskSpace"-->
-                                   <!--[(ngModel)]="operinoComponent.diskSpace"-->
-                                    <!--/>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="form-control-label" jhiTranslate="operonCloudPlatformApp.operinoComponent.computeResourceLimit" for="field_computeResourceLimit">Compute Resource Limit</label>-->
-                            <!--<input type="number" class="form-control" name="computeResourceLimit" id="field_computeResourceLimit"-->
-                                   <!--[(ngModel)]="operinoComponent.computeResourceLimit"-->
-                                    <!--/>-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="operonCloudPlatformApp.operinoComponent.type" for="field_type">Type</label>
-                        <select class="form-control" name="type" [(ngModel)]="operinoComponent.type" id="field_type"  required>
-                            <option value="CDR" jhiTranslate="operonCloudPlatformApp.OperinoComponentType.CDR">CDR</option>
-                            <option value="DEMOGRAPHICS" jhiTranslate="operonCloudPlatformApp.OperinoComponentType.DEMOGRAPHICS">DEMOGRAPHICS</option>
-                            <!--<option value="TERMINOLOGY" jhiTranslate="operonCloudPlatformApp.OperinoComponentType.TERMINOLOGY">TERMINOLOGY</option>-->
-                        </select>
+                        <label class="form-control-label" jhiTranslateDisabled="operonCloudPlatformApp.operinoComponent.type" for="field_type">Type</label>
+                        <input class="form-control" name="type" [(ngModel)]="operinoComponent.type" id="field_type"  disabled>
                         <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
                             <small class="form-text text-danger"
-                                   [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                                   [hidden]="!editForm.controls.type?.errors?.required" jhiTranslateDisabled="entity.validation.required">
                                 This field is required.
                             </small>
                         </div>
