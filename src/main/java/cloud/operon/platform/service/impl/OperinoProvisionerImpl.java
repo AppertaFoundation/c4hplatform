@@ -100,13 +100,13 @@ public class OperinoProvisionerImpl implements InitializingBean, OperinoProvisio
                     templateHeaders.setContentType(MediaType.APPLICATION_XML);
                     templateHeaders.add("Authorization", "Basic " + token);
                     // upload various templates - we have to upload at least on template as work around fo EhrExplorer bug
-                    thinkEhrRestClient.uploadTemplate(templateHeaders, "sample_requests/vital-signs/vital-signs-template.xml");
+                    thinkEhrRestClient.uploadTemplate(templateHeaders, "sample_requests/problems/problems-template.xml");
                     // now if user has requested provisioning, we upload other templates and generated data
                     if (operino.getProvision()) {
                         thinkEhrRestClient.uploadTemplate(templateHeaders, "sample_requests/allergies/allergies-template.xml");
                         thinkEhrRestClient.uploadTemplate(templateHeaders, "sample_requests/lab-results/lab-results-template.xml");
                         thinkEhrRestClient.uploadTemplate(templateHeaders, "sample_requests/orders/orders-template.xml");
-                        thinkEhrRestClient.uploadTemplate(templateHeaders, "sample_requests/problems/problems-template.xml");
+                        thinkEhrRestClient.uploadTemplate(templateHeaders, "sample_requests/vital-signs/vital-signs-template.xml");
                         thinkEhrRestClient.uploadTemplate(templateHeaders, "sample_requests/procedures/procedures-template.xml");
 
                         // now call provisioner url with parameters to populate dummy data against problem diagnosis template

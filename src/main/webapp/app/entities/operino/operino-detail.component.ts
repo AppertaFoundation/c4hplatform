@@ -44,13 +44,18 @@ export class OperinoDetailComponent implements OnInit, OnDestroy {
         this.isEditing = false;
         this.operinoService.find(id).subscribe(operino => {
             this.operino = operino;
+            this.assignOperinoToComponents();
+            // update config
+            this.updateConfig(id);
         });
-        this.operinoService.components(id).subscribe(
-            (res: Response) => this.onSuccess(res.json(), res.headers),
-            (res: Response) => this.onError(res.json())
-        );
+        // this.operinoService.components(id).subscribe(
+        //     (res: Response) => this.onSuccess(res.json(), res.headers),
+        //     (res: Response) => this.onError(res.json())
+        // );
+    }
+
+    updateConfig(id) {
         this.operinoService.config(id).subscribe(config => {
-            console.log("config  = " , config );
             this.operino.config = config;
         });
     }
@@ -73,15 +78,11 @@ export class OperinoDetailComponent implements OnInit, OnDestroy {
 
     private onSaveSuccess (result: Operino) {
           //this.eventManager.broadcast({ name: 'operinoListModification', content: 'OK'});
-        for (let component of this.operino.components) {
-            if (component.id !== undefined) {
-                this.operinoComponentService.update(component)
-                    .subscribe((res: OperinoComponent) => this.load(this.operino.id), (res: Response) => this.onSaveError(res.json()));
-            } else {
-                this.operinoComponentService.create(component)
-                    .subscribe((res: OperinoComponent) => this.load(this.operino.id), (res: Response) => this.onSaveError(res.json()));
-            }
-        }
+        this.operino = result;
+        // assign operino to components
+        this.assignOperinoToComponents();
+        // update config
+        this.updateConfig(this.operino.id);
         this.isSaving = false;
     }
 
@@ -102,11 +103,17 @@ export class OperinoDetailComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    private onSuccess(data, headers) {
-        this.operino.components = [];
-        for (let i = 0; i < data.length; i++) {
-            data.operino = this.operino;
-            this.operino.components.push(data[i]);
+    private assignOperinoToComponents() {
+        // console.log('Operino components', this.operino.components);
+        // this.operino.components.forEach(function(component) {
+        //     console.log('component', component);
+        //     console.log('this.operino', this.operino);
+        //     component.operino = this.operino;
+        // });
+        // this.operino.components = [];
+        for (let component of this.operino.components) {
+            let copy: Operino = Object.assign({}, this.operino);
+            component.operino = copy;
         }
     }
 }

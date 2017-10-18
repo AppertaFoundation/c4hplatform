@@ -46,7 +46,7 @@
                 <span *ngIf="operinoComponent.type === 'TERMINOLOGY'" class="fa fa-code-fork"></span>
                 &nbsp;
                 <span><b>{{operinoComponent.type}}</b></span>
-                <button class="btn btn-danger btn-sm float-right create-operino-component" [routerLink]="['/', { outlets: { popup: 'operino-component/'+ operinoComponent.id + '/delete'}  }]">
+                <button class="btn btn-danger btn-sm float-right create-operino-component" [routerLink]="['/', { outlets: { popup: 'operino-component/'+ operino.id + '/delete/' + operinoComponent.id}  }]">
                     <span class="fa fa-remove"></span>
                     <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
                 </button>

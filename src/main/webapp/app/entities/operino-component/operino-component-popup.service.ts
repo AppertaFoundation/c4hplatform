@@ -15,7 +15,7 @@ export class OperinoComponentPopupService {
 
     ) {}
 
-    open (component: Component, id?: number | any, createNew?: boolean): NgbModalRef {
+    open (component: Component, id?: number | any, operinoId?: number | any, createNew?: boolean): NgbModalRef {
         if (this.isOpen) {
             return;
         }
@@ -23,12 +23,16 @@ export class OperinoComponentPopupService {
 
         if (!createNew) {
             this.operinoComponentService.find(id).subscribe(operinoComponent => {
+                if(!operinoComponent.operino) {
+                    operinoComponent.operino = new Operino();
+                }
+                operinoComponent.operino.id = operinoId;
                 this.operinoComponentModalRef(component, operinoComponent);
             });
         } else {
             let operinoComponent = new OperinoComponent();
             operinoComponent.operino = new Operino();
-            operinoComponent.operino.id = id;
+            operinoComponent.operino.id = operinoId;
             return this.operinoComponentModalRef(component, operinoComponent);
         }
     }

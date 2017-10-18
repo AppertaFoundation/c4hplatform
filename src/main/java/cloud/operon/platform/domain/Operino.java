@@ -1,6 +1,5 @@
 package cloud.operon.platform.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -44,8 +43,7 @@ public class Operino implements Serializable {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "operino", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JsonIgnore
+    @OneToMany(mappedBy = "operino", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<OperinoComponent> components = new HashSet<>();
 

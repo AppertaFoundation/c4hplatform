@@ -37,11 +37,9 @@
             </dl>
         </div>
     </div>
-    <hr>
-    <jhi-operino-list-component [operino]="operino"></jhi-operino-list-component>
     <div class="modal-footer">
-        <button type="submit"
-                (click)="previousState()"
+        <button type="button"
+                routerLink="/operino"
                 class="btn btn-info">
             <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
         </button>
@@ -58,6 +56,8 @@
             <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
+    <hr>
+    <jhi-operino-list-component [operino]="operino"></jhi-operino-list-component>
     <hr>
     <div>
         <h4 jhiTranslate="operonCloudPlatformApp.operino.resources.header">Resources</h4>

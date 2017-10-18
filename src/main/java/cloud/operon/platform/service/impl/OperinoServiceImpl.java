@@ -72,6 +72,10 @@ public class OperinoServiceImpl implements OperinoService {
     public Operino save(Operino operino) {
         log.debug("Request to save Operino : {}", operino);
         operino.setUser(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get());
+        // assign all components to operino before save - cascade will save components automatically
+        for(OperinoComponent component : operino.getComponents()) {
+            component.setOperino(operino);
+        }
         Operino result = operinoRepository.save(operino);
         operinoSearchRepository.save(result);
         rabbitTemplate.convertAndSend("operinos", result);

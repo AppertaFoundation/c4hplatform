@@ -53,6 +53,11 @@ export class OperinoComponentService {
         return this.http.delete(`${this.operinoResourceUrl}/${operinoId}/components/${componentId}`);
     }
 
+    deleteById(id: number): Observable<Response> {
+        return this.http.delete(`${this.resourceUrl}/${id}`);
+        // return this.http.delete(`${this.operinoResourceUrl}/${operinoId}/components/${componentId}`);
+    }
+
     search(req?: any): Observable<Response> {
         let options = this.createRequestOption(req);
         return this.http.get(this.resourceSearchUrl, options)

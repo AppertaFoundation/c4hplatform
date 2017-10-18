@@ -48,6 +48,9 @@ export class OperinoComponentListComponent implements OnInit, OnDestroy {
         this.reverse = true;
         this.currentSearch = activatedRoute.snapshot.params['search'] ? activatedRoute.snapshot.params['search'] : '';
         this.jhiLanguageService.setLocations(['operinoComponent', 'hostingType', 'operinoComponentType', 'operino', 'footer']);
+        this.registerChangeInOperinoComponents();
+        this.registerDeletedOperinoComponents();
+        this.registerAddedOperinoComponents();
     }
 
     loadAll () {
@@ -63,14 +66,19 @@ export class OperinoComponentListComponent implements OnInit, OnDestroy {
             );
             return;
         }
-        this.operinoComponentService.componentsForOperino(this.operino.id, {
-            page: this.page,
-            size: this.itemsPerPage,
-            sort: this.sort()
-        }).subscribe(
-            (res: Response) => this.onSuccess(res.json(), res.headers),
-            (res: Response) => this.onError(res.json())
-        );
+        // if operino has been passed, then do not need to load components from server
+        if(! this.operino.components) {
+            this.operinoComponentService.componentsForOperino(this.operino.id, {
+                page: this.page,
+                size: this.itemsPerPage,
+                sort: this.sort()
+            }).subscribe(
+                (res: Response) => this.onSuccess(res.json(), res.headers),
+                (res: Response) => this.onError(res.json())
+            );
+        } else {
+            this.operinoComponents = this.operino.components;   
+        }
     }
 
     reset () {
@@ -110,12 +118,12 @@ export class OperinoComponentListComponent implements OnInit, OnDestroy {
         this.currentSearch = query;
         this.loadAll();
     }
+
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
-        this.registerChangeInOperinoComponents();
     }
 
     ngOnDestroy() {
@@ -128,6 +136,22 @@ export class OperinoComponentListComponent implements OnInit, OnDestroy {
 
     registerChangeInOperinoComponents() {
         this.eventSubscriber = this.eventManager.subscribe('operinoComponentListModification', (response) => this.reset());
+    }
+
+    registerDeletedOperinoComponents() {
+        this.eventSubscriber = this.eventManager.subscribe('operinoComponentDeleted', (response) => this.removeComponent(response));
+    }
+
+    private removeComponent (response: any) {
+        this.operinoComponents = this.operinoComponents.filter(function(v){return v.id !== response.content.id; });
+    }
+
+    private addComponent (response: any) {
+        this.operinoComponents.push(response.content);
+    }
+
+    registerAddedOperinoComponents() {
+        this.eventSubscriber = this.eventManager.subscribe('operinoComponentAdded', (response) => this.addComponent(response));
     }
 
     sort () {

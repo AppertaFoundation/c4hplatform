@@ -1,5 +1,5 @@
 
-const enum HostingType {
+enum HostingType {
     'N3',
     ' NON_N3'
 
@@ -23,5 +23,7 @@ export class OperinoComponent {
         public computeResourceLimit?: number,
         public type?: OperinoComponentType,
         public operino?: Operino
-    ) { }
+    ) { 
+        this.hosting = HostingType[' NON_N3'];
+    }
 }

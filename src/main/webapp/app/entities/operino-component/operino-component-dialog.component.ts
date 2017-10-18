@@ -43,10 +43,13 @@ export class OperinoComponentDialogComponent implements OnInit {
 
     save () {
         this.isSaving = true;
-        if (this.operinoComponent.id !== undefined) {
+        if (this.operinoComponent.id && (String(this.operinoComponent.id) != 'null')) {
+            console.log('Updating...');
             this.operinoComponentService.update(this.operinoComponent)
                 .subscribe((res: OperinoComponent) => this.onSaveSuccess(res), (res: Response) => this.onSaveError(res.json()));
         } else {
+            console.log('Saving...', this.operinoComponent);
+            this.operinoComponent.id = undefined;
             this.operinoComponentService.create(this.operinoComponent)
                 .subscribe((res: OperinoComponent) => this.onSaveSuccess(res), (res: Response) => this.onSaveError(res.json()));
         }
@@ -54,6 +57,7 @@ export class OperinoComponentDialogComponent implements OnInit {
 
     private onSaveSuccess (result: OperinoComponent) {
         this.eventManager.broadcast({ name: 'operinoComponentListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'operinoComponentAdded', content: result});
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -88,12 +92,13 @@ export class OperinoComponentPopupComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe(params => {
+            console.log('Params', params);
             if ( params['id'] ) {
                 this.modalRef = this.operinoComponentPopupService
                     .open(OperinoComponentDialogComponent, params['id'], false);
             } else {
                 this.modalRef = this.operinoComponentPopupService
-                    .open(OperinoComponentDialogComponent, params['operinoId'], true);
+                    .open(OperinoComponentDialogComponent, null, params['operinoId'], true);
             }
 
         });

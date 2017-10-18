@@ -29,18 +29,16 @@ export class OperinoComponentDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete (id: number) {
+    confirmDelete (component: OperinoComponent) {
 
-        this.operinoComponentService.find(id).subscribe(operinoComponent => {
-            this.operinoComponent = operinoComponent;
-            console.log("this.operinoComponent  = " , this.operinoComponent );
-            this.operinoComponentService.delete(id, this.operinoComponent.operino.id).subscribe(response => {
-                this.eventManager.broadcast({
-                    name: 'operinoComponentListModification',
-                    content: 'Deleted an operinoComponent'
-                });
-                this.activeModal.dismiss(true);
+        console.log('Component : ', component);
+        console.log('Operino : ', component.operino);
+        this.operinoComponentService.delete(component.id, component.operino.id).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'operinoComponentDeleted',
+                content: component
             });
+            this.activeModal.dismiss(true);
         });
 
         //this.operinoComponentService.delete(id, this.operinoComponent.operino.id).subscribe(response => {
@@ -70,7 +68,7 @@ export class OperinoComponentDeletePopupComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.routeSub = this.route.params.subscribe(params => {
             this.modalRef = this.operinoComponentPopupService
-                .open(OperinoComponentDeleteDialogComponent, params['id']);
+                .open(OperinoComponentDeleteDialogComponent, params['id'], params['operinoId'], false);
         });
     }
 

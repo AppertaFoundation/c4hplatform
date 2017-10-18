@@ -2,6 +2,7 @@ package cloud.operon.platform.domain;
 
 import cloud.operon.platform.domain.enumeration.HostingType;
 import cloud.operon.platform.domain.enumeration.OperinoComponentType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -55,6 +56,7 @@ public class OperinoComponent implements Serializable {
     private OperinoComponentType type;
 
     @ManyToOne
+    @JsonBackReference
     private Operino operino;
 
     public Long getId() {
