@@ -7,6 +7,7 @@ import cloud.operon.platform.repository.AuthorityRepository;
 import cloud.operon.platform.repository.UserRepository;
 import cloud.operon.platform.security.AuthoritiesConstants;
 import cloud.operon.platform.service.MailService;
+import cloud.operon.platform.service.OperinoService;
 import cloud.operon.platform.service.UserService;
 import cloud.operon.platform.service.dto.UserDTO;
 import cloud.operon.platform.web.rest.vm.ManagedUserVM;
@@ -51,6 +52,9 @@ public class AccountResourceIntTest {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OperinoService operinoService;
+
     @Mock
     private UserService mockUserService;
 
@@ -67,10 +71,10 @@ public class AccountResourceIntTest {
         doNothing().when(mockMailService).sendActivationEmail(anyObject());
 
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService);
+            new AccountResource(userRepository, userService, mockMailService, operinoService);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService);
+            new AccountResource(userRepository, mockUserService, mockMailService, operinoService);
 
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource).build();
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(accountUserMockResource).build();

@@ -1,14 +1,14 @@
 package cloud.operon.platform.web.rest;
 
-import cloud.operon.platform.web.rest.util.PaginationUtil;
-import com.codahale.metrics.annotation.Timed;
-import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.annotations.ApiParam;
 import cloud.operon.platform.domain.Operino;
 import cloud.operon.platform.domain.OperinoComponent;
 import cloud.operon.platform.service.OperinoComponentService;
 import cloud.operon.platform.service.OperinoService;
 import cloud.operon.platform.web.rest.util.HeaderUtil;
+import cloud.operon.platform.web.rest.util.PaginationUtil;
+import com.codahale.metrics.annotation.Timed;
+import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -82,14 +82,14 @@ public class OperinoResource {
             return createOperino(operino);
         }
         Operino verifiedOperino = operinoService.verifyOwnershipAndGet(operino.getId());
-        if(verifiedOperino != null){
+        if (verifiedOperino != null) {
             Operino result = operinoService.save(operino);
             return ResponseEntity.ok()
-                    .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operino.getId().toString()))
-                    .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operino.getId().toString()))
+                .body(result);
         } else {
             return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not authorized", operino.getId().toString())).build();
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not authorized", operino.getId().toString())).build();
         }
     }
 
@@ -141,7 +141,7 @@ public class OperinoResource {
             return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
         } else {
             return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not authorized", String.valueOf(id))).build();
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not authorized", String.valueOf(id))).build();
         }
     }
 
@@ -160,7 +160,7 @@ public class OperinoResource {
             return new ResponseEntity<>(operinoService.getConfigForOperino(operino), HttpStatus.OK);
         } else {
             return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not authorized", String.valueOf(id))).build();
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not authorized", String.valueOf(id))).build();
         }
     }
 
@@ -181,15 +181,15 @@ public class OperinoResource {
             }
             operinoComponent.setOperino(operino);
             OperinoComponent result = operinoComponentService.save(operinoComponent);
-            operino.addComponents(result);
+            operino.addComponent(result);
             // also save operino
             operinoService.save(operino);
             return ResponseEntity.created(new URI("/api/operino-components/" + result.getId()))
-                    .headers(HeaderUtil.createEntityCreationAlert(COMPONENT_ENTITY_NAME, result.getId().toString()))
-                    .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(COMPONENT_ENTITY_NAME, result.getId().toString()))
+                .body(result);
         } else {
             return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not found", String.valueOf(id))).build();
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not found", String.valueOf(id))).build();
         }
     }
 
@@ -207,22 +207,22 @@ public class OperinoResource {
         if (operino != null) {
             if (operinoComponent.getId() == null) {
                 return ResponseEntity.badRequest()
-                        .headers(HeaderUtil.createFailureAlert(COMPONENT_ENTITY_NAME, "Not found", String.valueOf(operinoComponent.getId()))).build();
+                    .headers(HeaderUtil.createFailureAlert(COMPONENT_ENTITY_NAME, "Not found", String.valueOf(operinoComponent.getId()))).build();
             }
             OperinoComponent result = operinoComponentService.save(operinoComponent);
             return ResponseEntity.ok()
-                    .headers(HeaderUtil.createEntityUpdateAlert(COMPONENT_ENTITY_NAME, operinoComponent.getId().toString()))
-                    .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(COMPONENT_ENTITY_NAME, operinoComponent.getId().toString()))
+                .body(result);
         } else {
             return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not found", String.valueOf(id))).build();
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not found", String.valueOf(id))).build();
         }
     }
 
     /**
      * DELETE  /operinos/:id/components/:componentId : delete the "componentId" component for to the "id" operino.
      *
-     * @param id the id of the operino to delete component
+     * @param id          the id of the operino to delete component
      * @param componentId the id of the component to delete
      * @return the ResponseEntity with status 200 (OK) and with body the operino, or with status 404 (Not Found)
      */
@@ -235,7 +235,7 @@ public class OperinoResource {
             OperinoComponent operinoComponent = operinoComponentService.findOneByOperino(componentId, operino);
             if (operinoComponent.getId() == null) {
                 return ResponseEntity.badRequest()
-                        .headers(HeaderUtil.createFailureAlert(COMPONENT_ENTITY_NAME, "Not found", String.valueOf(operinoComponent.getId()))).build();
+                    .headers(HeaderUtil.createFailureAlert(COMPONENT_ENTITY_NAME, "Not found", String.valueOf(operinoComponent.getId()))).build();
             }
             operino = operino.removeComponents(operinoComponent);
             operinoComponentService.delete(componentId);
@@ -245,7 +245,7 @@ public class OperinoResource {
             return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(COMPONENT_ENTITY_NAME, componentId.toString())).build();
         } else {
             return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not found", String.valueOf(id))).build();
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Not found", String.valueOf(id))).build();
         }
     }
 
@@ -260,7 +260,7 @@ public class OperinoResource {
     public ResponseEntity<Void> deleteOperino(@PathVariable Long id) {
         log.debug("REST request to delete Operino : {}", id);
         Operino verifiedOperino = operinoService.verifyOwnershipAndGet(id);
-        if(verifiedOperino != null){
+        if (verifiedOperino != null) {
             operinoService.delete(id);
         }
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
@@ -270,7 +270,7 @@ public class OperinoResource {
      * SEARCH  /_search/operinos?query=:query : search for the operino corresponding
      * to the query.
      *
-     * @param query the query of the operino search 
+     * @param query    the query of the operino search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

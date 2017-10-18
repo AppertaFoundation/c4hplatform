@@ -30,7 +30,6 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
@@ -103,7 +102,7 @@ public class OperonCloudPlatformApp {
 
         OperinoRepository operinoRepository = ctx.getBean(OperinoRepository.class);
         UserRepository userRepository = ctx.getBean(UserRepository.class);
-        List<Operino> operinos = operinoRepository.findAll().stream().collect(Collectors.toList());
+        List<Operino> operinos = operinoRepository.findAll();
         log.info("operinos.size() = " + operinos.size());
 
         if(operinos.size() == 0){
@@ -127,7 +126,7 @@ public class OperonCloudPlatformApp {
                     component.setDiskSpace(Long.valueOf(String.valueOf(j * 1000)));
                     component.setRecordsNumber(Long.valueOf(String.valueOf(j * 1000)));
                     component.setTransactionsLimit(Long.valueOf(String.valueOf(j * 1000)));
-                    operino.addComponents(component);
+                    operino.addComponent(component);
 
                 }
 

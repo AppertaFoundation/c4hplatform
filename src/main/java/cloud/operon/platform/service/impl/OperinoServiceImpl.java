@@ -29,10 +29,10 @@ import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
  */
 @Service
 @Transactional
-public class OperinoServiceImpl implements OperinoService{
+public class OperinoServiceImpl implements OperinoService {
 
     private final Logger log = LoggerFactory.getLogger(OperinoServiceImpl.class);
-    
+
     private final OperinoRepository operinoRepository;
     private final NotificationRepository notificationRepository;
     private final UserService userService;
@@ -72,10 +72,10 @@ public class OperinoServiceImpl implements OperinoService{
     }
 
     /**
-     *  Get all the operinos.
-     *  
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * Get all the operinos.
+     *
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
@@ -91,19 +91,19 @@ public class OperinoServiceImpl implements OperinoService{
     }
 
     /**
-     *  Get one operino by id.
+     * Get one operino by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Override
     @Transactional(readOnly = true)
     public Operino verifyOwnershipAndGet(Long id) {
         log.debug("Request to verify ownership and get Operino : {}", id);
         Operino operino = operinoRepository.findOneByUserAndId(SecurityUtils.getCurrentUserLogin(), id);
-        if(operino != null){
+        if (operino != null) {
             return operino;
-        } else if(userService.isAdmin()){
+        } else if (userService.isAdmin()) {
             return operinoRepository.findOne(id);
         } else {
             return null;
@@ -112,10 +112,10 @@ public class OperinoServiceImpl implements OperinoService{
 
 
     /**
-     *  Get one operino by id.
+     * Get one operino by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Override
     @Transactional(readOnly = true)
@@ -125,16 +125,16 @@ public class OperinoServiceImpl implements OperinoService{
     }
 
     /**
-     *  Delete the  operino by id.
+     * Delete the  operino by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Operino : {}", id);
         // veirfy ownership
         Operino operino = findOne(id);
-        if(operino != null) {
+        if (operino != null) {
             // first truncate domain
             thinkEhrRestClient.truncateDomain(operino.getDomain());
             operinoRepository.delete(id);
@@ -147,8 +147,8 @@ public class OperinoServiceImpl implements OperinoService{
     /**
      * Search for the operino corresponding to the query.
      *
-     *  @param query the query of the search
-     *  @return the list of entities
+     * @param query the query of the search
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
@@ -161,6 +161,7 @@ public class OperinoServiceImpl implements OperinoService{
 
     /**
      * Gets config associated with an operino
+     *
      * @param operino the operino to get config for
      * @return the congig as a map
      */
@@ -169,12 +170,12 @@ public class OperinoServiceImpl implements OperinoService{
     public Map<String, String> getConfigForOperino(Operino operino) {
 
         String name = operino.getUser().getFirstName() + operino.getUser().getLastName();
-        if(name.length() < 1){
+        if (name.length() < 1) {
             name = operino.getDomain();
         }
 
         // create basic auth token
-        String operinoUserName = operino.getUser().getLogin()+"_"+operino.getDomain();
+        String operinoUserName = operino.getUser().getLogin() + "_" + operino.getDomain();
         String operinoPassword = operino.getUser().getPassword().substring(0, 12);
         String plainCreds = operinoUserName + ":" + operinoPassword;
         byte[] plainCredsBytes = plainCreds.getBytes();
@@ -182,7 +183,7 @@ public class OperinoServiceImpl implements OperinoService{
         String base64Creds = new String(base64CredsBytes);
 
         // create Map of data to be posted for domain creation
-        Map<String, String> data= new HashMap<>();
+        Map<String, String> data = new HashMap<>();
         data.put("domainName", operino.getDomain());
         data.put("domainSystemId", operino.getDomain());
         data.put("name", name);
