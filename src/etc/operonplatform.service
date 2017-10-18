@@ -1,0 +1,21 @@
+# Systemd unit file for ${project.artifactId}
+[Unit]
+Description=${project.artifactId} service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+
+Environment=JAVA_HOME=/usr/java/latest/jre
+
+ExecStart=/opt/${project.artifactId}/run.sh
+ExecStop=/bin/kill -15 $MAINPID
+
+User=${project.artifactId}
+Group=${project.artifactId}
+UMask=0007
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

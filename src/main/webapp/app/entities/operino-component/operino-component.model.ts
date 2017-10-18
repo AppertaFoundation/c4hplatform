@@ -7,8 +7,7 @@ const enum HostingType {
 
 const enum OperinoComponentType {
     'CDR',
-    ' DEMOGRAPHICS',
-    ' TERMINOLOGY'
+    ' DEMOGRAPHICS'
 
 };
 import { Operino } from '../operino';

@@ -1,17 +1,17 @@
 package cloud.operon.platform.web.rest;
 
+import cloud.operon.platform.domain.Operino;
+import cloud.operon.platform.domain.User;
 import cloud.operon.platform.repository.UserRepository;
+import cloud.operon.platform.security.SecurityUtils;
 import cloud.operon.platform.service.MailService;
+import cloud.operon.platform.service.OperinoService;
+import cloud.operon.platform.service.UserService;
 import cloud.operon.platform.service.dto.UserDTO;
 import cloud.operon.platform.web.rest.util.HeaderUtil;
-import com.codahale.metrics.annotation.Timed;
-
-import cloud.operon.platform.domain.User;
-import cloud.operon.platform.security.SecurityUtils;
-import cloud.operon.platform.service.UserService;
 import cloud.operon.platform.web.rest.vm.KeyAndPasswordVM;
 import cloud.operon.platform.web.rest.vm.ManagedUserVM;
-
+import com.codahale.metrics.annotation.Timed;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
@@ -40,12 +40,15 @@ public class AccountResource {
 
     private final MailService mailService;
 
+    private final OperinoService operinoService;
+
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService) {
+                           MailService mailService, OperinoService operinoService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.operinoService = operinoService;
     }
 
     /**
@@ -73,6 +76,10 @@ public class AccountResource {
                             managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(), managedUserVM.getLangKey());
 
                     mailService.sendActivationEmail(user);
+
+                    Operino operino = OperinoService.createOperino("Operino 1", user, true, false);
+                    operinoService.save(operino);
+
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
         );

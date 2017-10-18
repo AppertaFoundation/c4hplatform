@@ -44,7 +44,7 @@
         {
             "fieldName": "type",
             "fieldType": "OperinoComponentType",
-            "fieldValues": "CDR, DEMOGRAPHICS, TERMINOLOGY",
+            "fieldValues": "CDR, DEMOGRAPHICS",
             "fieldValidateRules": [
                 "required"
             ]

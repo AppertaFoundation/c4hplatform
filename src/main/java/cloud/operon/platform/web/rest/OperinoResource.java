@@ -1,14 +1,14 @@
 package cloud.operon.platform.web.rest;
 
-import cloud.operon.platform.web.rest.util.PaginationUtil;
-import com.codahale.metrics.annotation.Timed;
-import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.annotations.ApiParam;
 import cloud.operon.platform.domain.Operino;
 import cloud.operon.platform.domain.OperinoComponent;
 import cloud.operon.platform.service.OperinoComponentService;
 import cloud.operon.platform.service.OperinoService;
 import cloud.operon.platform.web.rest.util.HeaderUtil;
+import cloud.operon.platform.web.rest.util.PaginationUtil;
+import com.codahale.metrics.annotation.Timed;
+import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -183,7 +183,7 @@ public class OperinoResource {
             }
             operinoComponent.setOperino(operino);
             OperinoComponent result = operinoComponentService.save(operinoComponent);
-            operino.addComponents(result);
+            operino.addComponent(result);
             // also save operino
             operinoService.save(operino);
             return ResponseEntity.created(new URI("/api/operino-components/" + result.getId()))

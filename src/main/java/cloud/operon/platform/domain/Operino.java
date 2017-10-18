@@ -105,7 +105,7 @@ public class Operino implements Serializable {
         return this;
     }
 
-    public Operino addComponents(OperinoComponent operinoComponent) {
+    public Operino addComponent(OperinoComponent operinoComponent) {
         this.components.add(operinoComponent);
         operinoComponent.setOperino(this);
         return this;
