@@ -18,14 +18,14 @@ export const operinoComponentRoute: Routes = [
     component: OperinoComponentComponent,
     data: {
         authorities: ['ROLE_USER'],
-        pageTitle: 'operonCloudPlatformApp.operinoComponent.home.title'
+        pageTitle: 'Operino Components'
     }
   }, {
     path: 'operino-component/:id',
     component: OperinoComponentDetailComponent,
     data: {
         authorities: ['ROLE_USER'],
-        pageTitle: 'operonCloudPlatformApp.operinoComponent.home.title'
+        pageTitle: 'Operino Components'
     }
   }
 ];
@@ -36,7 +36,7 @@ export const operinoComponentPopupRoute: Routes = [
     component: OperinoComponentPopupComponent,
     data: {
         authorities: ['ROLE_USER'],
-        pageTitle: 'operonCloudPlatformApp.operinoComponent.home.title'
+        pageTitle: 'Operino Components'
     },
     outlet: 'popup'
   },
@@ -45,28 +45,17 @@ export const operinoComponentPopupRoute: Routes = [
     component: OperinoComponentPopupComponent,
     data: {
         authorities: ['ROLE_USER'],
-        pageTitle: 'operonCloudPlatformApp.operinoComponent.home.title'
+        pageTitle: 'Operino Components'
+    },
+    outlet: 'popup'
+  },
+  {
+    path: 'operino-component/:id/delete',
+    component: OperinoComponentDeletePopupComponent,
+    data: {
+        authorities: ['ROLE_USER'],
+        pageTitle: 'Operino Components'
     },
     outlet: 'popup'
   }
-   ,
-  {
-   path: 'operino-component/:operinoId/delete/:id',
-   component: OperinoComponentDeletePopupComponent,
-   data: {
-       authorities: ['ROLE_USER'],
-       pageTitle: 'operonCloudPlatformApp.operinoComponent.home.title'
-   },
-   outlet: 'popup'
-  }
-  //   ,
-  // {
-  //   path: 'operino-component/:id/delete',
-  //   component: OperinoComponentDeletePopupComponent,
-  //   data: {
-  //       authorities: ['ROLE_USER'],
-  //       pageTitle: 'operonCloudPlatformApp.operinoComponent.home.title'
-  //   },
-  //   outlet: 'popup'
-  // }
 ];

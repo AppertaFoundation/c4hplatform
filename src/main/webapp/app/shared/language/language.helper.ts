@@ -28,9 +28,7 @@ export class JhiLanguageHelper {
              titleKey = this.getPageTitle(this.router.routerState.snapshot.root);
         }
 
-        this.translateService.get(titleKey).subscribe(title => {
-            this.titleService.setTitle(title);
-        });
+        this.titleService.setTitle(titleKey);
     }
 
     private init () {

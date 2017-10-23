@@ -9,7 +9,7 @@ export const errorRoute: Routes = [
     component: ErrorComponent,
     data: {
       authorities: [],
-      pageTitle: 'error.title'
+      pageTitle: 'Error'
     },
     canActivate: [UserRouteAccessService]
   },
@@ -18,7 +18,7 @@ export const errorRoute: Routes = [
     component: ErrorComponent,
     data: {
       authorities: [],
-      pageTitle: 'error.title'
+      pageTitle: 'Error'
     },
     canActivate: [UserRouteAccessService]
   }
