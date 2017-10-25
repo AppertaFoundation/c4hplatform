@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * REST controller for managing the current user's account.
@@ -77,9 +78,6 @@ public class AccountResource {
 
                     mailService.sendActivationEmail(user);
 
-                    Operino operino = OperinoService.createOperino("Operino 1", user, true, false);
-                    operinoService.save(operino);
-
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
         );
@@ -95,7 +93,15 @@ public class AccountResource {
     @Timed
     public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
         return userService.activateRegistration(key)
-            .map(user -> new ResponseEntity<String>(HttpStatus.OK))
+            .map(new Function<User, ResponseEntity<String>>() {
+                @Override
+                public ResponseEntity<String> apply(User user) {
+                    Operino operino = OperinoService.createOperino("Starter Operino", user, true, true);
+                    operinoService.addDefaultComponents(operino);
+                    operinoService.save(operino);
+                    return new ResponseEntity<String>(HttpStatus.OK);
+                }
+            })
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
