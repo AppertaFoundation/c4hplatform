@@ -22,9 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,7 +71,7 @@ public class OperinoServiceImpl implements OperinoService {
         log.debug("Request to save Operino : {}", operino);
         operino.setUser(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get());
         // assign all components to operino before save - cascade will save components automatically
-        for(OperinoComponent component : operino.getComponents()) {
+        for (OperinoComponent component : operino.getComponents()) {
             component.setOperino(operino);
         }
         Operino result = operinoRepository.save(operino);
@@ -235,7 +233,7 @@ public class OperinoServiceImpl implements OperinoService {
      * @param operino The Operino to be populated
      * @return The same Operino with default components of the specified types
      */
-    public Operino createOperino(Operino operino) {
+    public Operino populateOperino(Operino operino) {
         log.debug("Creating Operino (with components = {})", createNewOperinoWithComponents);
         if (createNewOperinoWithComponents && operino.getComponents().size() == 0) {
             OperinoComponentType[] types = {OperinoComponentType.CDR, OperinoComponentType.DEMOGRAPHICS};

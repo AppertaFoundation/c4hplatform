@@ -2,10 +2,6 @@ package cloud.operon.platform.service;
 
 import cloud.operon.platform.domain.Notification;
 import cloud.operon.platform.domain.Operino;
-import cloud.operon.platform.domain.OperinoComponent;
-import cloud.operon.platform.domain.enumeration.HostingType;
-import cloud.operon.platform.domain.enumeration.OperinoComponentType;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import cloud.operon.platform.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,11 +66,11 @@ public interface OperinoService {
     Notification sendNotification(Notification notification);
 
     Page<Notification> getNotifications(Pageable pageable);
-    
+
     /**
      * Create Operino if the service is configured to do so
      */
-    Operino createOperino(Operino operino);
+    Operino populateOperino(Operino operino);
 
      /**
      * Static utility method to create an Operino with the given parameters
