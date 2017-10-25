@@ -233,7 +233,7 @@ public class OperinoServiceImpl implements OperinoService {
      * @param operino The Operino to be populated
      * @return The same Operino with default components of the specified types
      */
-    public Operino populateOperino(Operino operino) {
+    public Operino addDefaultComponents(Operino operino) {
         log.debug("Creating Operino (with components = {})", createNewOperinoWithComponents);
         if (createNewOperinoWithComponents && operino.getComponents().size() == 0) {
             OperinoComponentType[] types = {OperinoComponentType.CDR, OperinoComponentType.DEMOGRAPHICS};

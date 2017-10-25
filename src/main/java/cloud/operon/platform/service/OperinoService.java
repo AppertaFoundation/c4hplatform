@@ -68,9 +68,9 @@ public interface OperinoService {
     Page<Notification> getNotifications(Pageable pageable);
 
     /**
-     * Create Operino if the service is configured to do so
+     * Add components according to configuration
      */
-    Operino populateOperino(Operino operino);
+    Operino addDefaultComponents(Operino operino);
 
      /**
      * Static utility method to create an Operino with the given parameters

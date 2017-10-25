@@ -97,7 +97,7 @@ public class AccountResource {
                 @Override
                 public ResponseEntity<String> apply(User user) {
                     Operino operino = OperinoService.createOperino("Starter Operino", user, true, true);
-                    operinoService.populateOperino(operino);
+                    operinoService.addDefaultComponents(operino);
                     operinoService.save(operino);
                     return new ResponseEntity<String>(HttpStatus.OK);
                 }

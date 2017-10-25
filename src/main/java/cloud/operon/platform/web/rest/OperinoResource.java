@@ -59,7 +59,7 @@ public class OperinoResource {
         if (operino.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new operino cannot already have an ID")).body(null);
         }
-        operino = operinoService.populateOperino(operino);
+        operino = operinoService.addDefaultComponents(operino);
         Operino result = operinoService.save(operino);
         return ResponseEntity.created(new URI("/api/operinos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
