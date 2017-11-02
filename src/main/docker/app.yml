@@ -17,3 +17,7 @@ services:
         extends:
             file: elasticsearch.yml
             service: operoncloudplatform-elasticsearch
+    operoncloudplatform-rabbitmq:
+        extends:
+            file: rabbitmq.yml
+            service: operoncloudplatform-rabbitmq
