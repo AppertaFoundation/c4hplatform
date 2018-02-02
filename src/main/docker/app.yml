@@ -1,23 +1,29 @@
 version: '2'
 services:
-    operoncloudplatform-app:
-        image: operoncloudplatform
+    iniduscloudplatform-app:
+        image: iniduscloudplatform
         environment:
             - SPRING_PROFILES_ACTIVE=prod,swagger
-            - SPRING_DATASOURCE_URL=jdbc:mariadb://operoncloudplatform-mariadb:3306/operoncloudplatform
+            - SPRING_DATASOURCE_URL=jdbc:mariadb://iniduscloudplatform-mariadb:3306/iniduscloudplatform
             - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
-            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=operoncloudplatform-elasticsearch:9300
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=iniduscloudplatform-elasticsearch:9300
+            - SPRING_RABBITMQ_HOST=iniduscloudplatform-rabbitmq
+            - ***REMOVED***
+            - ***REMOVED***
+            - ***REMOVED***
+            - ***REMOVED***
+
         ports:
-            - 8080:8080
-    operoncloudplatform-mariadb:
+            - 8181:9582
+    iniduscloudplatform-mariadb:
         extends:
             file: mariadb.yml
-            service: operoncloudplatform-mariadb
-    operoncloudplatform-elasticsearch:
+            service: iniduscloudplatform-mariadb
+    iniduscloudplatform-elasticsearch:
         extends:
             file: elasticsearch.yml
-            service: operoncloudplatform-elasticsearch
-    operoncloudplatform-rabbitmq:
+            service: iniduscloudplatform-elasticsearch
+    iniduscloudplatform-rabbitmq:
         extends:
             file: rabbitmq.yml
-            service: operoncloudplatform-rabbitmq
+            service: iniduscloudplatform-rabbitmq

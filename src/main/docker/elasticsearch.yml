@@ -1,9 +1,9 @@
 version: '2'
 services:
-    operoncloudplatform-elasticsearch:
+    iniduscloudplatform-elasticsearch:
         image: elasticsearch:2.4.1
         # volumes:
-        #     - ~/volumes/jhipster/operoncloudplatform/elasticsearch/:/usr/share/elasticsearch/data/
+        #     - ~/volumes/jhipster/iniduscloudplatform/elasticsearch/:/usr/share/elasticsearch/data/
         ports:
             - 9200:9200
             - 9300:9300

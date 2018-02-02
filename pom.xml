@@ -9,11 +9,11 @@
         <relativePath />
     </parent>
 
-    <groupId>cloud.operon</groupId>
-    <artifactId>operonplatform</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <groupId>cloud.inidus</groupId>
+    <artifactId>inidusplatform</artifactId>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Operon Cloud Platform</name>
+    <name>Inidus Cloud Platform</name>
 
     <prerequisites>
         <maven>${maven.version}</maven>
@@ -749,7 +749,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${docker-maven-plugin.version}</version>
                 <configuration>
-                    <imageName>operoncloudplatform</imageName>
+                    <imageName>iniduscloudplatform</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>

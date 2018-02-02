@@ -31,6 +31,18 @@ Add the `help` flag on any command to see how you can use it. For example, `yarn
 
 The `yarn run` command will list all of the scripts available to run for this project.
 
+## Dockerisation
+
+To build the inidus cloudplatform application as a Docker image for production, run:
+
+    `./mvnw clean package -Pprod -DskipTests=true docker:build`
+
+To ensure everything worked, run:
+
+    `docker-compose -f target/docker/app.yml up`
+
+Then navigate to [http://localhost:8181](http://localhost:8181) in your browser.
+
 ## Building for production
 
 To optimize the operoncloudplatform application for production, run:
@@ -40,7 +52,7 @@ To optimize the operoncloudplatform application for production, run:
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
 To ensure everything worked, run:
 
-    java -jar target/*.war
+    `java -jar target/*.war`
 
 Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
@@ -52,9 +64,9 @@ Ensure `RabbitMq` is up and running first (see above). To launch your applicatio
 
 ### Client tests
 
-Unit tests are run by [Karma][] and written with [Jasmine][]. They're located in `src/test/javascript/` and can be run with:
+Unit tests are run by [Karma](https://karma-runner.github.io) and written with [Jasmine](https://jasmine.github.io/). They're located in `src/test/javascript/` and can be run with:
 
     yarn test
 
-UI end-to-end tests are powered by [Protractor][], which is built on top of WebDriverJS. They're located in `src/test/javascript/e2e`
+UI end-to-end tests are powered by [Protractor](http://www.protractortest.org/#/), which is built on top of WebDriverJS. They're located in `src/test/javascript/e2e`
 and can be run by starting Spring Boot in one terminal (`./mvnw spring-boot:run`) and running the tests (`gulp itest`) in a second one.
